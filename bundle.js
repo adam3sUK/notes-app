@@ -45,9 +45,16 @@
   displayNotes((notes) => {
     space.innerHTML = "";
     notes.forEach((note) => {
-      space.insertAdjacentHTML("afterbegin", `
-        <p><strong>${note.title}</strong> - <span>${note.content.substring(0, 20)}</span></p>
-    `);
+      const notewrapper = document.createElement("div");
+      const notetitle = document.createElement("p");
+      notetitle.innerText = note.title;
+      const notedesc = document.createElement("p");
+      notedesc.innerText = note.content;
+      notewrapper.append(notetitle);
+      notewrapper.addEventListener("click", () => {
+        selected.innerHTML = `<h2>${note.title}</h2> <p>${note.content}</p>`;
+      });
+      space.append(notewrapper);
     });
   });
   form.addEventListener("submit", (event) => {

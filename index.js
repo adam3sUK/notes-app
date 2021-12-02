@@ -14,15 +14,28 @@ const selected = document.querySelector('#selected-note');
 displayNotes((notes) => {
   space.innerHTML = "";
   notes.forEach(note => {
-    // note.addEventListener('click', () => {
-    //   selected.innerHTML = `<p><strong>${note.title}</strong> - <span>${note.content}</span></p>`
-    // })
-    space.insertAdjacentHTML('afterbegin', `
-        <p><strong>${note.title}</strong> - <span>${note.content.substring(0, 20)}</span></p>
-    `);
+    
+    //space.insertAdjacentHTML('afterbegin', `
+      //  <p><strong>${note.title}</strong> - <span>${note.content.substring(0, 20)}</span></p>
+    //`);
+    
+    //creating a div to wrap a note in
+    const notewrapper = document.createElement("div");
+    const notetitle = document.createElement("p");
+    notetitle.innerText = note.title;
+    const notedesc = document.createElement("p");
+    notedesc.innerText = note.content;
+    notewrapper.append(notetitle);
+    notewrapper.addEventListener('click', () => {
+      selected.innerHTML = `<h2>${note.title}</h2> <p>${note.content}</p>`
     });
-  let spaceElem = document.querySelectorAll("#noteSpace p");
-  spaceElem.forEach(noteElem => noteElem.addEventListener('click',)
+    space.append(notewrapper);
+
+
+
+
+    });
+  
 
 });
 
