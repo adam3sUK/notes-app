@@ -41,13 +41,12 @@
   var content = document.querySelector("#note-content");
   var space = document.querySelector("#noteSpace");
   var form = document.querySelector("#form");
+  var selected = document.querySelector("#selected-note");
   displayNotes((notes) => {
     space.innerHTML = "";
     notes.forEach((note) => {
       space.insertAdjacentHTML("afterbegin", `
-      <a href="#" id="">
         <p><strong>${note.title}</strong> - <span>${note.content.substring(0, 20)}</span></p>
-      </a>
     `);
     });
   });
