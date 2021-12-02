@@ -1,4 +1,4 @@
-const displayNote = (callback) => {
+const displayNotes = (callback) => {
   fetch('http://localhost:3000/notes') 
   .then(response => response.json())
   .then(data => callback(data)); 
@@ -6,4 +6,4 @@ const displayNote = (callback) => {
 
 
 
-module.exports = displayNote
+module.exports = displayNotes

@@ -6,7 +6,7 @@
   // createNote.js
   var require_createNote = __commonJS({
     "createNote.js"(exports, module) {
-      var createNote2 = (title2, content2, callback2) => {
+      var createNote2 = (title2, content2, callback) => {
         fetch("http://localhost:3000/notes", {
           method: "POST",
           headers: {
@@ -15,6 +15,7 @@
           body: JSON.stringify({ "title": `${title2}`, "content": `${content2}` })
         }).then((response) => response.json()).then((data) => {
           console.log("Success:", data);
+          callback(data);
         }).catch((error) => {
           console.error("Error:", error);
         });
@@ -26,21 +27,36 @@
   // displayNote.js
   var require_displayNote = __commonJS({
     "displayNote.js"(exports, module) {
-      var displayNote2 = (callback2) => {
-        fetch("http://localhost:3000/notes").then((response) => response.json()).then((data) => callback2(data));
+      var displayNotes2 = (callback) => {
+        fetch("http://localhost:3000/notes").then((response) => response.json()).then((data) => callback(data));
       };
-      module.exports = displayNote2;
+      module.exports = displayNotes2;
     }
   });
 
   // index.js
   var createNote = require_createNote();
-  var displayNote = require_displayNote();
-  displayNote(callback);
-  var button = document.querySelector("#click-btn");
+  var displayNotes = require_displayNote();
   var title = document.querySelector("#note-title");
   var content = document.querySelector("#note-content");
-  button.addEventListener("click", () => {
-    createNote(title.value, content.value);
+  var space = document.querySelector("#noteSpace");
+  var form = document.querySelector("#form");
+  displayNotes((notes) => {
+    space.innerHTML = "";
+    notes.forEach((note) => {
+      space.insertAdjacentHTML("afterbegin", `
+      <a href="#" id="">
+        <p><strong>${note.title}</strong> - <span>${note.content.substring(0, 20)}</span></p>
+      </a>
+    `);
+    });
+  });
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    createNote(title.value, content.value, (newNote) => {
+      space.insertAdjacentHTML("afterbegin", `
+      <p><strong>${newNote.title}</strong> - <span>${newNote.content.substring(0, 20)}</span></p>
+    `);
+    });
   });
 })();
