@@ -1,4 +1,6 @@
 const createNote = require('./createNote')
+const displayNote = require('./displayNote')
+displayNote(callback);
 
 
 const button = document.querySelector('#click-btn');

@@ -6,7 +6,7 @@
   // createNote.js
   var require_createNote = __commonJS({
     "createNote.js"(exports, module) {
-      var createNote2 = (title2, content2, callback) => {
+      var createNote2 = (title2, content2, callback2) => {
         fetch("http://localhost:3000/notes", {
           method: "POST",
           headers: {
@@ -23,8 +23,20 @@
     }
   });
 
+  // displayNote.js
+  var require_displayNote = __commonJS({
+    "displayNote.js"(exports, module) {
+      var displayNote2 = (callback2) => {
+        fetch("http://localhost:3000/notes").then((response) => response.json()).then((data) => callback2(data));
+      };
+      module.exports = displayNote2;
+    }
+  });
+
   // index.js
   var createNote = require_createNote();
+  var displayNote = require_displayNote();
+  displayNote(callback);
   var button = document.querySelector("#click-btn");
   var title = document.querySelector("#note-title");
   var content = document.querySelector("#note-content");
