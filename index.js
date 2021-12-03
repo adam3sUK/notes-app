@@ -9,41 +9,32 @@ const title = document.querySelector('#note-title');
 const content = document.querySelector('#note-content');
 const space = document.querySelector('#noteSpace');
 const form = document.querySelector('#form');
-const selected = document.querySelector('#selected-note');
 
 displayNotes((notes) => {
   space.innerHTML = "";
   notes.forEach(note => {
-    
-    //space.insertAdjacentHTML('afterbegin', `
-      //  <p><strong>${note.title}</strong> - <span>${note.content.substring(0, 20)}</span></p>
-    //`);
-    
-    //creating a div to wrap a note in
-    const notewrapper = document.createElement("div");
-    const notetitle = document.createElement("p");
-    notetitle.innerText = note.title;
-    const notedesc = document.createElement("p");
-    notedesc.innerText = note.content;
-    notewrapper.append(notetitle);
-    notewrapper.addEventListener('click', () => {
-      selected.innerHTML = `<h2>${note.title}</h2> <p>${note.content}</p>`
-    });
-    space.append(notewrapper);
-
-
-
-
-    });
-  
-
+    AddNoteToPage(note);
+  });
 });
+
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   createNote(title.value, content.value, (newNote) => {
-    space.insertAdjacentHTML('afterbegin', `
-      <p><strong>${newNote.title}</strong> - <span>${newNote.content.substring(0, 20)}</span></p>
-    `);
+    AddNoteToPage(newNote);
   });
 });
+
+const AddNoteToPage = (note) => {
+  const notewrapper = document.createElement("p");
+  const notetitle = document.createElement("strong");
+  notetitle.innerText = note.title;
+  const notedesc = document.createElement("span");
+  notedesc.innerText = ` - ${note.content.substring(0, 20)}`;
+  notewrapper.append(notetitle);
+  notewrapper.append(notedesc);
+  notewrapper.addEventListener('click', () => {
+    document.body.innerHTML = `<h2>${note.title}</h2> <p>${note.content}</p>`
+  });
+  space.append(notewrapper);
+};
