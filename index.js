@@ -1,12 +1,12 @@
 const createNote = require('./createNote')
 const displayNotes = require('./displayNote')
-
+const createForm = require('./createForm')
 
 // const button = document.querySelector('#click-btn');
-const title = document.querySelector('#note-title');
-const content = document.querySelector('#note-content');
+// let title = document.querySelector('#note-title');
+// let content = document.querySelector('#note-content');
 const space = document.querySelector('#noteSpace');
-const form = document.querySelector('#form');
+// let form = document.querySelector ('#form');
 
 displayNotes((notes) => {
   space.innerHTML = "";
@@ -23,6 +23,8 @@ form.addEventListener('submit', (event) => {
   });
 });
 
+
+
 const AddNoteToPage = (note) => {
   const notewrapper = document.createElement("p");
   notewrapper.style.textDecoration = "underline";
@@ -32,10 +34,24 @@ const AddNoteToPage = (note) => {
   notetitle.innerText = note.title;
   const notedesc = document.createElement("span");
   notedesc.innerText = ` - ${note.content.substring(0, 20)}`;
-  notewrapper.append(notetitle);
-  notewrapper.append(notedesc);
+  notewrapper.append(notetitle, notedesc);
+  const close = document.createElement("button")
+  close.innerText = "Close";
   notewrapper.addEventListener('click', () => {
-    document.body.innerHTML = `<h1>Notes</h1><h2>${note.title}</h2> <p>${note.content}</p>`
+    document.body.innerHTML = `
+      <h1>Notes</h1>
+      <h2>${note.title}</h2>
+      <p>${note.content}</p>`;
+    document.body.append(close);
   });
-  space.append(notewrapper);
+  close.addEventListener('click', () => {
+    displayNotes((notes) => {
+      document.body.innerHTML = "";
+      createForm();
+      notes.forEach(note => {
+        AddNoteToPage(note);
+      });
+    });
+  })
+  document.body.append(notewrapper);
 };
