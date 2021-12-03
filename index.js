@@ -2,8 +2,6 @@ const createNote = require('./createNote')
 const displayNotes = require('./displayNote')
 
 
-
-
 // const button = document.querySelector('#click-btn');
 const title = document.querySelector('#note-title');
 const content = document.querySelector('#note-content');
@@ -27,6 +25,9 @@ form.addEventListener('submit', (event) => {
 
 const AddNoteToPage = (note) => {
   const notewrapper = document.createElement("p");
+  notewrapper.style.textDecoration = "underline";
+  notewrapper.style.color = "#3333BB";
+  notewrapper.style.cursor = "pointer";
   const notetitle = document.createElement("strong");
   notetitle.innerText = note.title;
   const notedesc = document.createElement("span");
@@ -34,7 +35,7 @@ const AddNoteToPage = (note) => {
   notewrapper.append(notetitle);
   notewrapper.append(notedesc);
   notewrapper.addEventListener('click', () => {
-    document.body.innerHTML = `<h2>${note.title}</h2> <p>${note.content}</p>`
+    document.body.innerHTML = `<h1>Notes</h1><h2>${note.title}</h2> <p>${note.content}</p>`
   });
   space.append(notewrapper);
 };
